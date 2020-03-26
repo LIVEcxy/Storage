@@ -15,18 +15,16 @@ export default class Storage {
 
     [_getType](value = undefined) {
 
-        if (typeof value !== `object`) {
-            return typeof value;
-        } else {
-            const types = Object.prototype.toString.call(value);
+        const types = Object.prototype.toString.call(value);
 
-            if (types) return types.slice(8, -1);
-            throw `unknown type: ${types}, value:${value}`;
-        }
+        if (types) return types.slice(8, -1);
+        throw `unknown type: ${types}, value:${value}`;
 
     }
 
     [_checkParams](value) {
+
+        console.log('value',value[0], this[_getType](value[0]) )
 
         if(value.length < 2){
             console.warn('key and value  is not defined')
@@ -42,26 +40,26 @@ export default class Storage {
 
     }
 
-    modify(object, modifyKey, key, value, type) {
+    modify(...option) {
 
-        if(this[_getType](object) !== 'Object' && this[_getType](object) !== 'Array') {
+        if(this[_getType](option[0]) !== 'Object' && this[_getType](option[0]) !== 'Array') {
             throw "modify's item not object or Array";
         }else{
-            object[key] = value;
+            option[0][option[2]] = option[3];
         }
 
-        switch(type) {
+        switch(option[4]) {
             case 'l':
-                this.setLocal(modifyKey, object)
+                this.setLocal(option[1], option[0])
             break;
             case 's':
-                this.setSession(modifyKey, object)
+                this.setSession(option[1], option[0])
             break;
         }
 
     }
 
-    setLocal(key, value, option) {
+    setLocal(...option) {
         const that = this;
 
         if(!this[_checkParams](option)) return 'parmas Error'
