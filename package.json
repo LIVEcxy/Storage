@@ -1,0 +1,21 @@
+{
+  "name": "storag",
+  "description": "a Set or Get Storage",
+  "author": "liusm",
+  "version": "1.0.3",
+  "main": "/storage.js",
+  "scripts": {
+    "test": "echo test",
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "babel-loader": "^8.1.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.0"
+  },
+  "dependencies": {}
+}
