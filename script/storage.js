@@ -79,7 +79,7 @@ export default class Storage {
 
     }
 
-    setLocalSync(...option) {
+    setLocalAsyn(...option) {
         const that = this;
 
         that.setLocal(option[0],option[1]);
@@ -142,7 +142,7 @@ export default class Storage {
 
     }
 
-    setSessionSync(...option) {
+    setSessionAsyn(...option) {
         const that = this;
 
         that.setSession(option[0],option[1]);
