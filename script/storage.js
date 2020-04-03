@@ -1,18 +1,23 @@
 'use strict'
 
-// import util from 'util/util.js'
+import Util from 'util/util.js'
+
+
 
 // const util = new util;
+const Util = new Util;
 const _getType = Symbol('getType');
 const _checkParams = Symbol('checkParams');
 
-export default class Storage {
+export default class Storage extends Util {
 
     Autor   = 'liusm';
     Version = '1.0.2';
     Descripttion = '支持两种语法的同步存储';
 
     constructor() {
+        console.log('constructor')
+        console.log(this.Version)
         if(!window) return console.warn('not window')
     }
 

@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: liusm
+ * @Date: 2020-04-01 09:42:49
+ * @LastEditors: liusm
+ * @LastEditTime: 2020-04-03 17:48:56
+ */
 
 const path = require('path');
 const UglifyJsPlugin  = require('uglifyjs-webpack-plugin');
@@ -9,7 +17,7 @@ const config = {
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].js',
+        filename: 'main.js',
     },
     module: {
         rules: [
@@ -25,9 +33,15 @@ const config = {
             }
         ]
     },
-    plugins:[
+    plugins: [
         new UglifyJsPlugin()
-    ]
+    ],
+    devServer: {
+        contentBase:path.resolve(__dirname,'dist'),
+        host:'127.0.0.1',
+        compress:true,
+        port:8899
+    }
 }
 
 module.exports = config;
