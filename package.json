@@ -2,7 +2,7 @@
   "name": "storage-es6",
   "description": "a Set or Get Storage",
   "author": "liusm",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "main": "dist/storage.js",
   "scripts": {

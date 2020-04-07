@@ -1,117 +1,22 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: liusm
+ * @Date: 2020-03-30 13:51:44
+ * @LastEditors: liusm
+ * @LastEditTime: 2020-04-07 16:51:41
+ */
 'use strict'
 
-import Util from './util/util.js'
 
-
-const _getType = Symbol('getType');
-const _checkParams = Symbol('checkParams');
-
-export default class Storage extends Util{
-
-    Autor   = 'liusm';
-    Version = '1.0.3';
-    Descripttion = '划分工具类';
-
-    constructor() {
-
-        if(!window) return console.warn('not window');
-
-        super('session');
-        console.log(`Storage init, Version:${this.Version} Autor:${this.Autor}`);
-
-    }
-
-    [_getType](...params) {
-        return super.getType(params[0]);
-    }
-
-    [_checkParams](params) {
-        return super.checkParmas(params);
-    }
-
-    modify(...option) {
-
-        if(this[_getType](option[0]) !== 'Object' && this[_getType](option[0]) !== 'Array') {
-            throw "modify's item not object or Array";
-        }else{
-            option[0][option[2]] = option[3];
-        }
-
-        switch(option[4]) {
-            case 'l':
-                this.setLocal(option[1], option[0])
-            break;
-            case 's':
-                this.setSession(option[1], option[0])
-            break;
-        }
-
-    }
-
-    setSession(...option) {
-        const that = this;
-
-        if(!this[_checkParams](option)) return 'parmas Error'
-        
-        if(option[2] && option[2].asyn === true){
-        return this.setSessionAsyn(option[0],option[1])
-
-        }else{
-            return sessionStorage.setItem(option[0], JSON.stringify(option[1]));
-        }
-
-    }
-
-    setSessionAsyn(...option) {
-        const that = this;
-
-        setTimeout(() => {
-            that.setSession(option[0],option[1]);
-        },1)
-
-        return new Promise((resolve, reject) => {
-
-            if(that.getSession(option[0]) === option[1]){
-                resolve(that.getSession(option[0]))
-            }else{
-                let timerNum = 0;
-                let timer = setInterval(() => {
-                    if(that.getSession(option[0]) === option[1]){
-                        clearInterval(timer);
-                        resolve(that.getSession(option[0]));
-                    }else{
-                        timerNum ++;
-                        if(timerNum >= 20){
-                            clearInterval(timer);
-                            reject(`${option[0]} set Error`);
-                        }
-                    }
-                },250)
-
-            }
-
-        })
-
-    }
-
-    getSession(key) {
-        return JSON.parse(sessionStorage.getItem(key));
-    }
-
-    modifySession(modifyKey, key, value) {
-        let modifyObj = this.getSession(modifyKey);
-        this.modify(modifyObj, modifyKey, key, value, 's')
-    }
-
-    removeSession(key) {
-        sessionStorage.removeItem(key);
-    }
-
-    clearSession() {
-        sessionStorage.clear();
-    }
-
-}
+const Autor = 'liusm';
+const Version = '1.0.3';
+const Descripttion = '划分工具类';
 
 
 // export { Storage }
+import Session  from './sessionStorage/SessionStorage';
+// import Local  from './localStorage/LocalStorage';
+import Cookie from './cookie/Cookie';
+
+export { Session, Cookie};

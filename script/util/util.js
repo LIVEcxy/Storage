@@ -1,5 +1,6 @@
 'use strict'
 
+let _timerController = Symbol('timer');
 export default class util {
 
     Autor   = 'liusm';
@@ -19,6 +20,7 @@ export default class util {
     }
 
     checkParmas(params){
+
         if(params.length < 2){
             console.warn('key and value is not defined',params)
             return false
@@ -37,5 +39,9 @@ export default class util {
         }
 
         return true
+    }
+
+    [_timerController]() {
+
     }
 }

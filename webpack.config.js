@@ -4,7 +4,7 @@
  * @Autor: liusm
  * @Date: 2020-04-01 09:42:49
  * @LastEditors: liusm
- * @LastEditTime: 2020-04-03 17:48:56
+ * @LastEditTime: 2020-04-07 11:41:57
  */
 
 const path = require('path');
@@ -13,11 +13,12 @@ const UglifyJsPlugin  = require('uglifyjs-webpack-plugin');
 
 const config = {
     entry: {
-        storage: './main.js'
+        main: './main.js',
+        storage: './script/storage.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js',
+        filename: '[name].js',
     },
     module: {
         rules: [
