@@ -1,54 +1,32 @@
 'use strict'
 
-import Util from 'util/util.js'
+import Util from './util/util.js'
 
 
-
-// const util = new util;
-const Util = new Util;
 const _getType = Symbol('getType');
 const _checkParams = Symbol('checkParams');
 
-export default class Storage extends Util {
+export default class Storage extends Util{
 
     Autor   = 'liusm';
-    Version = '1.0.2';
-    Descripttion = '支持两种语法的同步存储';
+    Version = '1.0.3';
+    Descripttion = '划分工具类';
 
     constructor() {
-        console.log('constructor')
-        console.log(this.Version)
-        if(!window) return console.warn('not window')
+
+        if(!window) return console.warn('not window');
+
+        super('session');
+        console.log(`Storage init, Version:${this.Version} Autor:${this.Autor}`);
+
     }
 
-    [_getType](value = undefined) {
-
-        const types = Object.prototype.toString.call(value);
-
-        if (types) return types.slice(8, -1);
-        throw `unknown type: ${types}, value:${value}`;
-
+    [_getType](...params) {
+        return super.getType(params[0]);
     }
 
     [_checkParams](params) {
-
-        if(params.length < 2){
-            console.warn('key and value is not defined',params)
-            return false
-        }
-
-        if(this[_getType](params[0]) !== 'String'){
-            console.warn('key is not String ',params[0])
-            return false
-        }
-
-        if(this[_getType](params[0]) === 'Undefined' || this[_getType](params[1]) === 'Undefined'){
-            console.warn('key or value is Undefined',params)
-            return false
-        }
-
-        return true
-
+        return super.checkParmas(params);
     }
 
     modify(...option) {
@@ -70,76 +48,13 @@ export default class Storage extends Util {
 
     }
 
-    setLocal(...option) {
-        const that = this;
-
-        if(!this[_checkParams](option)) return 'parmas Error'
-
-        if(option[2] && option[2].sync === true){
-            return this.setLocalSync(option[0],option[1])
-
-        }else{
-            return localStorage.setItem(option[0], JSON.stringify(option[1]));
-        }
-
-    }
-
-    setLocalAsyn(...option) {
-        const that = this;
-
-        that.setLocal(option[0],option[1]);
-
-        return new Promise((resolve, reject) => {
-
-            if(that.getLocal(option[0])){
-                resolve(that.getLocal(option[0]))
-            }else{
-                let timerNum = 0;
-                let timer = setInterval(() => {
-                    if(that.getLocal(option[0])){
-                        clearInterval(timer);
-                        resolve(that.getLocal(option[0]));
-                    }else{
-                        timerNum ++;
-                        if(timerNum >= 20){
-                            clearInterval(timer);
-                            reject(`${option[0]} set Error`);
-                        }
-                    }
-                },250)
-
-            }
-
-        })
-
-    }
-
-    getLocal(key) {
-        return JSON.parse(localStorage.getItem(key));
-    }
-
-    modifyLocal(modifyKey, key, value) {
-        let modifyObj = this.getSession(modifyKey);
-        this.modify(modifyObj, modifyKey, key, value, 'l')
-    }
-
-    removeLocal(key) {
-        localStorage.removeItem(key);
-    }
-
-    clearLocal() {
-        localStorage.clear();
-    }
-
-
-
     setSession(...option) {
         const that = this;
 
         if(!this[_checkParams](option)) return 'parmas Error'
-
-        if(option[2] && option[2].sync === true){
-            return this.setSessionSync(option[0],option[1])
+        
+        if(option[2] && option[2].asyn === true){
+        return this.setSessionAsyn(option[0],option[1])
 
         }else{
             return sessionStorage.setItem(option[0], JSON.stringify(option[1]));
@@ -150,16 +65,18 @@ export default class Storage extends Util {
     setSessionAsyn(...option) {
         const that = this;
 
-        that.setSession(option[0],option[1]);
+        setTimeout(() => {
+            that.setSession(option[0],option[1]);
+        },1)
 
         return new Promise((resolve, reject) => {
 
-            if(that.getSession(option[0])){
+            if(that.getSession(option[0]) === option[1]){
                 resolve(that.getSession(option[0]))
             }else{
                 let timerNum = 0;
                 let timer = setInterval(() => {
-                    if(that.getSession(option[0])){
+                    if(that.getSession(option[0]) === option[1]){
                         clearInterval(timer);
                         resolve(that.getSession(option[0]));
                     }else{
@@ -195,5 +112,6 @@ export default class Storage extends Util {
     }
 
 }
+
 
 // export { Storage }
