@@ -1,10 +1,10 @@
 /*
- * @Description: 
+ * @Description:
  * @Version: 1.0
  * @Autor: liusm
  * @Date: 2020-04-07 15:32:14
  * @LastEditors: liusm
- * @LastEditTime: 2020-04-14 15:08:31
+ * @LastEditTime: 2020-04-14 15:07:47
  */
 
 
@@ -23,7 +23,7 @@ export default class Storage extends Util{
 
         if(!window) return console.warn('not window');
 
-        super('session');
+        super('');
         console.log(`Storage init, Version:${this.Version} Autor:${this.Autor}`);
 
     }
@@ -46,7 +46,7 @@ export default class Storage extends Util{
 
         switch(option[4]) {
             case 'l':
-                this.setLocal(option[1], option[0])
+                this.set(option[1], option[0])
             break;
             case 's':
                 this.set(option[1], option[0])
@@ -64,7 +64,7 @@ export default class Storage extends Util{
         return this.setAsyn(option[0],option[1])
 
         }else{
-            return sessionStorage.setItem(option[0], JSON.stringify(option[1]));
+            return localStorage.setItem(option[0], JSON.stringify(option[1]));
         }
 
     }
@@ -100,7 +100,7 @@ export default class Storage extends Util{
     }
 
     get(key) {
-        return JSON.parse(sessionStorage.getItem(key));
+        return JSON.parse(localStorage.getItem(key));
     }
 
     modify(modifyKey, key, value) {
@@ -109,11 +109,11 @@ export default class Storage extends Util{
     }
 
     remove(key) {
-        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
     }
 
     clear() {
-        sessionStorage.clear();
+        localStorage.clear();
     }
 
 }

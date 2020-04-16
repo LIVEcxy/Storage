@@ -1,10 +1,18 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: liusm
+ * @Date: 2020-04-14 14:00:45
+ * @LastEditors: liusm
+ * @LastEditTime: 2020-04-14 14:07:45
+ */
 'use strict'
 
 let _timerController = Symbol('timer');
 export default class util {
 
-    Autor   = 'liusm';
-    Version = '1.0.0'
+    // Autor   = 'liusm'
+    // Version = '1.0.0'
 
     constructor(sign){
         console.log(`util Version:${this.Version}`);

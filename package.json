@@ -2,9 +2,9 @@
   "name": "storage-es6",
   "description": "a Set or Get Storage",
   "author": "liusm",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "license": "MIT",
-  "main": "dist/storage.js",
+  "main": "script/storage.js",
   "scripts": {
     "dev": "webpack-dev-server",
     "test": "echo test",
