@@ -1,10 +1,10 @@
 /*
- * @Description: 
+ * @Description:
  * @Version: 1.0
  * @Autor: liusm
  * @Date: 2020-04-07 15:32:14
  * @LastEditors: liusm
- * @LastEditTime: 2020-04-14 15:08:31
+ * @LastEditTime: 2020-06-29 18:29:34
  */
 
 
@@ -61,8 +61,7 @@ export default class Storage extends Util{
         if(!this[_checkParams](option)) return 'parmas Error'
 
         if(option[2] && option[2].asyn === true){
-        return this.setAsyn(option[0],option[1])
-
+            return this.setAsyn(option[0],option[1])
         }else{
             return sessionStorage.setItem(option[0], JSON.stringify(option[1]));
         }
@@ -103,10 +102,10 @@ export default class Storage extends Util{
         return JSON.parse(sessionStorage.getItem(key));
     }
 
-    modify(modifyKey, key, value) {
-        let modifyObj = this.get(modifyKey);
-        this.modify(modifyObj, modifyKey, key, value, 's')
-    }
+    // modify(modifyKey, key, value) {
+    //     let modifyObj = this.get(modifyKey);
+    //     this.modify(modifyObj, modifyKey, key, value, 's')
+    // }
 
     remove(key) {
         sessionStorage.removeItem(key);
